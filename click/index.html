@@ -1,0 +1,34 @@
+<!-- 放在需要跳转的页面 -->
+<script>
+    (function () {
+        // 只读取 localStorage
+        const gclid = localStorage.getItem('gclid') || '0';
+        const fbclid = localStorage.getItem('fbclid') || '0';
+        const scCid = localStorage.getItem('sc_cid') || '0';
+        const utmTerm = localStorage.getItem('utm_term') || '0';
+
+        // 选择一个存在的 ID：gclid > fbclid > ScCid
+        const trackingId = gclid !== '0' ? gclid : fbclid !== '0' ? fbclid : scCid;
+
+        const baseUrl = 'https://nmttrack.com/';
+        const params = new URLSearchParams({
+            a: '146518',
+            c: '407790',
+            co: '194328',
+            mt: '5',
+            s1: 'Google',
+            s2: 'XHD',
+            s3: 'AW-17028711680/YkwnCLnF-74aEICK9rc_',
+            s4: 'uk.smartlovehome.fun/lulutoxus',
+            s5: trackingId || '0',
+            utm_term: utmTerm
+        });
+
+        const finalUrl = baseUrl + '?' + params.toString();
+
+        // 避免在目标域重复跳转
+        if (!window.location.href.includes('nmttrack.com')) {
+            window.location.href = finalUrl;
+        }
+    })();
+</script>
